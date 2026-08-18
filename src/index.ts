@@ -1,5 +1,8 @@
 import type { Context } from '@deepseek-ai/cordis'
 
+import { createKungfuRunner } from './runner.js'
+import { workspaceInspectTool } from './tools/workspace-inspect.js'
+
 export const name = 'dsh-kungfu'
 export const inject = ['tools']
 
@@ -10,6 +13,6 @@ export interface Config {
 }
 
 export function apply(ctx: Context, config: Config = {}): void {
-  void ctx
-  void config
+  const runner = createKungfuRunner(config)
+  ctx.tools.register(workspaceInspectTool(runner))
 }
