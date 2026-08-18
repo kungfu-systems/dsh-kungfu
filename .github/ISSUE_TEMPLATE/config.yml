@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Kungfu product and CLI issues
+    url: https://github.com/kungfu-systems/kungfu/issues/new/choose
+    about: Report Kungfu CLI behavior and durable Work contract issues upstream.
+  - name: DeepSeek Harness issues
+    url: https://github.com/deepseek-ai/DeepSeek-Harness/issues/new/choose
+    about: Report Harness runtime and plugin-host behavior upstream.
