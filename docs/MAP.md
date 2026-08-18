@@ -15,8 +15,10 @@
 ## Build and review
 
 - `CONTRIBUTING.md` — development, DCO, and pull-request guidance.
+- `docs/releasing.md` — exact-tag npm trusted-publishing procedure.
 - `package.json` — package entry points and DeepSeek Harness bundle metadata.
 - `.github/workflows/ci.yml` — source, test, build, and package checks.
+- `.github/workflows/publish.yml` — manually dispatched, OIDC-backed npm release.
 - `SECURITY.md` — security reporting and review boundary.
 
 ## Claim boundary

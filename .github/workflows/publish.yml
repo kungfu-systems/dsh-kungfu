@@ -1,0 +1,56 @@
+name: Publish npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Exact v-prefixed release tag to publish
+        required: true
+        default: v0.1.0
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: npm-publish-${{ inputs.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.repository == 'kungfu-systems/dsh-kungfu'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ inputs.ref }}
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 11.20.0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+      - name: Verify exact release tag
+        env:
+          RELEASE_REF: ${{ inputs.ref }}
+        run: |
+          set -eu
+          case "$RELEASE_REF" in
+            v*) ;;
+            *) echo "release ref must start with v" >&2; exit 1 ;;
+          esac
+          git show-ref --verify --quiet "refs/tags/$RELEASE_REF"
+          test "$(git rev-parse HEAD)" = "$(git rev-list -n 1 "$RELEASE_REF")"
+          test "$(node -p "require('./package.json').version")" = "${RELEASE_REF#v}"
+      - run: pnpm install --frozen-lockfile --registry=https://registry.npmjs.org/
+      - run: pnpm check
+      - run: npm pack --dry-run
+      - name: Publish with npm trusted publishing
+        run: |
+          npm install --global npm@11.17.0
+          npm publish --access public --provenance --registry=https://registry.npmjs.org/
