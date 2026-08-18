@@ -1,0 +1,7 @@
+- insert:
+    - id: kungfu
+      name: '@kungfu-tech/dsh-kungfu'
+      config:
+        binary: !!js process.env.KUNGFU_BIN ?? 'kungfu'
+        timeoutMs: 15000
+        maxOutputBytes: 1048576
