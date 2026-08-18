@@ -4,11 +4,13 @@ Thank you for improving dsh-kungfu.
 
 ## Development
 
-Use Node.js 22 or newer and the public npm registry:
+Use Node.js 22 or newer, pnpm 11, and the public npm registry:
 
 ```bash
-npm ci --registry=https://registry.npmjs.org/
-npm run check
+corepack enable
+pnpm install --frozen-lockfile --registry=https://registry.npmjs.org/
+pnpm check
+npm pack --dry-run
 ```
 
 Keep changes focused. Adapter behavior belongs in `src/`, tests belong in
