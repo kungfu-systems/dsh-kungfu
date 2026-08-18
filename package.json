@@ -1,0 +1,72 @@
+{
+  "name": "@kungfu-tech/dsh-kungfu",
+  "version": "0.1.0",
+  "description": "Typed, read-only DeepSeek Harness tools for installed Kungfu Projects and Work.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "cordis.patch.yml"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean --sourcemap",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "kungfu",
+    "agent-tools",
+    "workflow"
+  ],
+  "author": "Kungfu Origin",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kungfu-systems/dsh-kungfu.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kungfu-systems/dsh-kungfu/issues"
+  },
+  "homepage": "https://github.com/kungfu-systems/dsh-kungfu#readme",
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@11.20.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": ">=4.0.1 <5.0.0",
+    "@deepseek-ai/dsh-tools": ">=0.0.1-rc.1 <0.1.0 || >=0.1.0-rc.1 <0.2.0-0"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "4.0.1",
+    "@deepseek-ai/dsh-tools": "0.0.1-rc.1",
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.13.3",
+    "eslint": "10.8.1",
+    "tsup": "8.5.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.67.0",
+    "vitest": "4.1.10"
+  }
+}
